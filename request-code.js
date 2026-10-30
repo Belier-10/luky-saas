@@ -12,10 +12,6 @@ export default wrap(async (req, res) => {
   const n = await kv.incr("rl:" + identity.value, 900);
   if (n > 5) return send(res, 429, { error: "Trop de demandes. Réessayez dans 15 minutes." });
 
-  // Mode contournement par mot de passe maître : on valide la demande instantanément
-  send(res, 200, { 
-    sent: true, 
-    channel: identity.type, 
-    devCode: process.env.LUKY_MASTER_PASSWORD ? "MAÎTRE_ACTIF" : undefined 
-  });
+  // On valide directement la demande sans envoyer d'e-mail
+  send(res, 200, { sent: true, channel: identity.type });
 });
