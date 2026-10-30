@@ -5,12 +5,18 @@ async function sendEmail(to, subject, text) {
   const key = process.env.RESEND_API_KEY;
   const from = process.env.MAIL_FROM;
   if (!key || !from) throw httpError(503, "L’envoi d’e-mails n’est pas configuré sur le serveur.");
+  
   const r = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" },
     body: JSON.stringify({ from, to: [to], subject, text }),
   });
-  if (!r.ok) throw httpError(502, "Impossible d’envoyer l’e-mail pour le moment.");
+
+  if (!r.ok) {
+    const errorBody = await r.text();
+    console.error("Erreur Resend détaillée :", errorBody);
+    throw httpError(502, "Impossible d’envoyer l’e-mail pour le moment.");
+  }
 }
 
 async function sendPhone(phoneDigits, text) {
@@ -32,7 +38,12 @@ async function sendPhone(phoneDigits, text) {
     },
     body: form,
   });
-  if (!r.ok) throw httpError(502, "Impossible d’envoyer le message pour le moment.");
+
+  if (!r.ok) {
+    const errorBody = await r.text();
+    console.error("Erreur Twilio détaillée :", errorBody);
+    throw httpError(502, "Impossible d’envoyer le message pour le moment.");
+  }
 }
 
 export async function deliverCode(identity, code) {
