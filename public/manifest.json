@@ -1,0 +1,18 @@
+{
+  "id": "/",
+  "name": "Luky – Suivi Commandes WhatsApp",
+  "short_name": "Luky",
+  "description": "Suivez vos commandes WhatsApp et contactez vos clients en un clic.",
+  "lang": "fr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0C1226",
+  "theme_color": "#0C1226",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
